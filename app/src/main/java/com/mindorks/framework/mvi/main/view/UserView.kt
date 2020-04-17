@@ -1,6 +1,6 @@
-package com.mindorks.framework.mvi.view
+package com.mindorks.framework.mvi.main.view
 
-import com.mindorks.framework.mvi.mvibase.UserViewState
+import com.mindorks.framework.mvi.main.statemodel.UserViewState
 import io.reactivex.Observable
 
 interface UserView {
