@@ -1,4 +1,35 @@
 package com.mindorks.framework.mvi.main.viewmodel
 
-class UserViewModel {
+import androidx.lifecycle.ViewModel
+import com.mindorks.framework.mvi.main.statemodel.PartialMainViewState
+import com.mindorks.framework.mvi.main.statemodel.UserInteractor
+import com.mindorks.framework.mvi.main.statemodel.UserViewState
+import com.mindorks.framework.mvi.main.view.UserView
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.subjects.BehaviorSubject
+
+class UserViewModel (private val mainInteractor: UserInteractor = UserInteractor()) : ViewModel() {
+    private val compositeDisposable = CompositeDisposable()
+    private val stateSubject = BehaviorSubject.create<PartialMainViewState>()
+
+    fun bind(mainView: UserView) {
+        val dataChangeObservable = mainView.onButtonClick()
+            .flatMap {mainInteractor.fetchUserList().startWith(PartialMainViewState.ProgressState())}
+
+        val mergedIntentsObservable = Observable.merge(listOf(dataChangeObservable)).subscribeWith(stateSubject)
+        compositeDisposable.add(mergedIntentsObservable.scan(UserViewState(), this::reduce).subscribe { mainView.fetch(it) })
+    }
+
+    fun unbind() {
+        compositeDisposable.clear()
+    }
+
+    private fun reduce(previousState: UserViewState,partialState: PartialMainViewState): UserViewState {
+        return when (partialState) {
+            is PartialMainViewState.ProgressState -> UserViewState(progress = true)
+            is PartialMainViewState.ErrorState -> UserViewState(error = true)
+            is PartialMainViewState.ListFetchedState -> UserViewState(userList = partialState.userList)
+        }
+    }
 }

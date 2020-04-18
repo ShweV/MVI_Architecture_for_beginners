@@ -1,4 +1,4 @@
 package com.mindorks.framework.mvi.data.model
 
-class User {
+data class User(val name: String = "", val avatar: String = "", val email:String= "") {
 }
