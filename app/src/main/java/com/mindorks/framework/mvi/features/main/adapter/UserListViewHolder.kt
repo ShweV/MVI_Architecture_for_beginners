@@ -1,4 +1,4 @@
-package com.mindorks.framework.mvi.main.adapter
+package com.mindorks.framework.mvi.features.main.main.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

@@ -1,4 +1,4 @@
-package com.mindorks.framework.mvi.main.adapter
+package com.mindorks.framework.mvi.features.main.main.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -22,10 +22,6 @@ class UserListAdapter : RecyclerView.Adapter<UserListViewHolder>() {
     override fun getItemCount(): Int = userList.size
 
     fun setUserList(userList: List<User>) {
-        if (this.userList != userList) {
-            this.userList.clear()
-            this.userList.addAll(userList)
-            notifyDataSetChanged()
-        }
+        this.userList.addAll(userList)
     }
 }

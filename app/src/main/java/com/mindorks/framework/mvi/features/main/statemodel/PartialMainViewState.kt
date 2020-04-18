@@ -1,4 +1,4 @@
-package com.mindorks.framework.mvi.main.statemodel
+package com.mindorks.framework.mvi.features.main.main.statemodel
 
 import com.mindorks.framework.mvi.data.model.User
 

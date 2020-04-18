@@ -1,10 +1,10 @@
-package com.mindorks.framework.mvi.main.viewmodel
+package com.mindorks.framework.mvi.features.main.main.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.mindorks.framework.mvi.main.statemodel.PartialMainViewState
-import com.mindorks.framework.mvi.main.statemodel.UserInteractor
-import com.mindorks.framework.mvi.main.statemodel.UserViewState
-import com.mindorks.framework.mvi.main.view.UserView
+import com.mindorks.framework.mvi.features.main.main.statemodel.PartialMainViewState
+import com.mindorks.framework.mvi.features.main.main.statemodel.UserInteractor
+import com.mindorks.framework.mvi.features.main.main.statemodel.UserViewState
+import com.mindorks.framework.mvi.features.main.main.view.UserView
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject

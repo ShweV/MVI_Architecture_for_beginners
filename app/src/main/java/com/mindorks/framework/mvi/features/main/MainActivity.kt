@@ -1,20 +1,19 @@
-package com.mindorks.framework.mvi.main
+package com.mindorks.framework.mvi.features.main.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProviders
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding3.view.clicks
 import com.mindorks.framework.mvi.R
 import com.mindorks.framework.mvi.data.model.User
-import com.mindorks.framework.mvi.main.adapter.UserListAdapter
-import com.mindorks.framework.mvi.main.statemodel.UserViewState
-import com.mindorks.framework.mvi.main.view.UserView
-import com.mindorks.framework.mvi.main.viewmodel.UserViewModel
+import com.mindorks.framework.mvi.features.main.main.adapter.UserListAdapter
+import com.mindorks.framework.mvi.features.main.main.statemodel.UserViewState
+import com.mindorks.framework.mvi.features.main.main.view.UserView
+import com.mindorks.framework.mvi.features.main.main.viewmodel.UserViewModel
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
-
 
 
 class MainActivity : AppCompatActivity(),UserView {
@@ -25,7 +24,7 @@ class MainActivity : AppCompatActivity(),UserView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initRecyclerView()
-        userViewModel = ViewModelProviders.of(this)[UserViewModel::class.java]
+        userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
     }
 
     override fun onStart() {
@@ -43,23 +42,19 @@ class MainActivity : AppCompatActivity(),UserView {
         user_recycler.adapter = userListAdapter
     }
 
-    private fun showProgressBar(show: Boolean) {
+    private fun showProgress(show: Boolean) {
         if (show) {
-            user_recycler.visibility = View.GONE
-            error_text.visibility = View.GONE
-            progressBar.visibility = View.VISIBLE
+            showProgressBar()
         } else {
-            user_recycler.visibility = View.VISIBLE
-            error_text.visibility = View.GONE
-            progressBar.visibility = View.GONE
+            hideProgressBar()
         }
     }
 
     private fun showError(show: Boolean) {
         if (show) {
-            user_recycler.visibility = View.GONE
-            error_text.visibility = View.VISIBLE
+            showErrorMessage()
         } else {
+            //Hide error message
             error_text.visibility = View.GONE
         }
     }
@@ -75,9 +70,26 @@ class MainActivity : AppCompatActivity(),UserView {
 
     override fun fetch(userViewState: UserViewState) {
         with(userViewState) {
-            showProgressBar(progress)
+            showProgress(progress)
             showError(error)
             showUsersList(userList)
         }
+    }
+
+    private fun showProgressBar() {
+        user_recycler.visibility = View.GONE
+        error_text.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        user_recycler.visibility = View.VISIBLE
+        error_text.visibility = View.GONE
+        progressBar.visibility = View.GONE
+    }
+
+    private fun showErrorMessage(){
+        user_recycler.visibility = View.GONE
+        error_text.visibility = View.VISIBLE
     }
 }
