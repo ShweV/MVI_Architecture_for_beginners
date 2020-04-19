@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(),UserView {
 
     override fun onStart() {
         super.onStart()
-        userViewModel.bind(this)
+        userViewModel.getUsers(this)
     }
 
     override fun onStop() {

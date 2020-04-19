@@ -9,7 +9,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 
-class UserViewModel (private val mainInteractor: UserInteractor = UserInteractor()) : ViewModel() {
+class UserViewModel(private val mainInteractor: UserInteractor = UserInteractor()) : ViewModel() {
     private val compositeDisposable = CompositeDisposable()
     private val stateSubject = BehaviorSubject.create<PartialMainViewState>()
 
@@ -23,6 +23,14 @@ class UserViewModel (private val mainInteractor: UserInteractor = UserInteractor
 
     fun unbind() {
         compositeDisposable.clear()
+    }
+
+    fun getUsers(mainView:UserView) {
+        val dataChangeObservable = mainView.onButtonClick()
+            .flatMap {mainInteractor.getUsersRealState().startWith(PartialMainViewState.ProgressState())}
+
+        val mergedIntentsObservable = Observable.merge(listOf(dataChangeObservable)).subscribeWith(stateSubject)
+        compositeDisposable.add(mergedIntentsObservable.scan(UserViewState(), this::reduce).subscribe { mainView.fetch(it) })
     }
 
     private fun reduce(previousState: UserViewState,partialState: PartialMainViewState): UserViewState {
