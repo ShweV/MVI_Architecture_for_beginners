@@ -6,7 +6,7 @@ import io.reactivex.Single
 
 class UserRepository (private val apiHelper: ApiHelper) {
 
-    fun getUsers(): Single<List<User>>? {
+    fun getUsers(): Single<List<User>> {
         return apiHelper.getUsers()
     }
 }

@@ -5,7 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jakewharton.rxbinding3.view.clicks
+import com.jakewharton.rxbinding2.view.RxView
 import com.mindorks.framework.mvi.R
 import com.mindorks.framework.mvi.data.model.User
 import com.mindorks.framework.mvi.features.main.main.adapter.UserListAdapter
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(),UserView {
 
     override fun onStart() {
         super.onStart()
-        userViewModel.getUsers(this)
+        userViewModel.bind(this)
     }
 
     override fun onStop() {
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(),UserView {
     }
 
     override fun onButtonClick(): Observable<Boolean> {
-        return display_user_button.clicks().map { true }
+        return RxView.clicks(display_user_button).map { true }
     }
 
 

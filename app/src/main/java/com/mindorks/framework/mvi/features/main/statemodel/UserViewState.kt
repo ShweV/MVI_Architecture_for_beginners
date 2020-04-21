@@ -5,4 +5,5 @@ import com.mindorks.framework.mvi.data.model.User
 data class UserViewState(
     val progress: Boolean = false,
     val error: Boolean = false,
-    val userList: List<User> = listOf())
+    var userList: List<User> = listOf()
+)

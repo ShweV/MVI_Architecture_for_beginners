@@ -4,5 +4,5 @@ import com.mindorks.framework.mvi.data.model.User
 import io.reactivex.Single
 
 interface ApiService {
-    fun getUsers(): Single<List<User>>?
+    fun getUsers(): Single<List<User>>
 }

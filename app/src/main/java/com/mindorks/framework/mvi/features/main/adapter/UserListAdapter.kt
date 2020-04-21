@@ -24,4 +24,5 @@ class UserListAdapter : RecyclerView.Adapter<UserListViewHolder>() {
     fun setUserList(userList: List<User>) {
         this.userList.addAll(userList)
     }
+
 }

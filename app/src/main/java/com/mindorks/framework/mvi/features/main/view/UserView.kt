@@ -5,5 +5,5 @@ import io.reactivex.Observable
 
 interface UserView {
     fun onButtonClick(): Observable<Boolean>
-    fun fetch(mainViewState: UserViewState)
+    fun fetch(userViewState: UserViewState)
 }
